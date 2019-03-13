@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.spring.demo.dao.EmployeesMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.spring.demo.model.Employees" >
+    <id column="employees_id" property="id" jdbcType="INTEGER" />
+    <result column="employees_number" property="number" jdbcType="VARCHAR" />
+    <result column="employees_password" property="password" jdbcType="VARCHAR" />
+    <result column="employees_name" property="name" jdbcType="VARCHAR" />
+    <result column="employees_age" property="age" jdbcType="INTEGER" />
+    <result column="employees_sex" property="sex" jdbcType="VARCHAR" />
+    <result column="employees_phone" property="phone" jdbcType="VARCHAR" />
+    <result column="employees_id_number" property="idNumber" jdbcType="VARCHAR" />
+    <result column="employees_address" property="address" jdbcType="VARCHAR" />
+    <result column="employees_department" property="department" jdbcType="VARCHAR" />
+    <result column="employees_position" property="position" jdbcType="VARCHAR" />
+    <result column="employees_comment" property="comment" jdbcType="VARCHAR" />
+    <result column="employees_comment1" property="comment1" jdbcType="VARCHAR" />
+    <result column="employees_comment2" property="comment2" jdbcType="VARCHAR" />
+    <result column="department_name" property="department_name" jdbcType="VARCHAR" />
+    <result column="position_name" property="position_name" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    employees.id as employees_id, employees.number as employees_number, employees.password as employees_password, 
+    employees.name as employees_name, employees.age as employees_age, employees.sex as employees_sex, 
+    employees.phone as employees_phone, employees.id_number as employees_id_number, employees.address as employees_address, 
+    employees.department as employees_department, employees.position as employees_position, 
+    employees.comment as employees_comment, employees.comment1 as employees_comment1, 
+    employees.comment2 as employees_comment2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.com.spring.demo.model.EmployeesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from employees employees
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>
